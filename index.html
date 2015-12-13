@@ -30,78 +30,1160 @@
       <div class="row">
         <div class="span3 bs-docs-sidebar">
           <ul class="nav nav-list bs-docs-sidenav affix-top">
-            <li class="active"><a href="index.html">Main</a></li>
-            <li><a href="index.js.html">index.js</a></li>
+            <li class="active"><a href="index.js.html">index.js</a></li>
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
+              <li><a href="#Quickbooks"><i class="alert alert-success"></i><span>Quickbooks</span></a>
+              </li>
+              <li><a href="#createToken"><i class="alert alert-info"></i><span>createToken</span></a>
+              </li>
+              <li><a href="#getCharge"><i class="alert alert-info"></i><span>getCharge</span></a>
+              </li>
+              <li><a href="#charge"><i class="alert alert-info"></i><span>charge</span></a>
+              </li>
+              <li><a href="#capture"><i class="alert alert-info"></i><span>capture</span></a>
+              </li>
+              <li><a href="#getChargeRefund"><i class="alert alert-info"></i><span>getChargeRefund</span></a>
+              </li>
+              <li><a href="#refundCharge"><i class="alert alert-info"></i><span>refundCharge</span></a>
+              </li>
+              <li><a href="#bankAccounts"><i class="alert alert-info"></i><span>bankAccounts</span></a>
+              </li>
+              <li><a href="#bankAccount"><i class="alert alert-info"></i><span>bankAccount</span></a>
+              </li>
+              <li><a href="#createBankAccount"><i class="alert alert-info"></i><span>createBankAccount</span></a>
+              </li>
+              <li><a href="#createBankAccountFromToken"><i class="alert alert-info"></i><span>createBankAccountFromToken</span></a>
+              </li>
+              <li><a href="#deleteBankAccount"><i class="alert alert-info"></i><span>deleteBankAccount</span></a>
+              </li>
+              <li><a href="#cards"><i class="alert alert-info"></i><span>cards</span></a>
+              </li>
+              <li><a href="#bankAccount"><i class="alert alert-info"></i><span>bankAccount</span></a>
+              </li>
+              <li><a href="#createCard"><i class="alert alert-info"></i><span>createCard</span></a>
+              </li>
+              <li><a href="#createCardFromToken"><i class="alert alert-info"></i><span>createCardFromToken</span></a>
+              </li>
+              <li><a href="#deleteCard"><i class="alert alert-info"></i><span>deleteCard</span></a>
+              </li>
+              <li><a href="#getEcheck"><i class="alert alert-info"></i><span>getEcheck</span></a>
+              </li>
+              <li><a href="#echeck"><i class="alert alert-info"></i><span>echeck</span></a>
+              </li>
+              <li><a href="#getEcheckRefund"><i class="alert alert-info"></i><span>getEcheckRefund</span></a>
+              </li>
+              <li><a href="#refundEcheck"><i class="alert alert-info"></i><span>refundEcheck</span></a>
+              </li>
             </ul>
           </div>
         </div>
         <div class="span9">
-          <section id="Main" class="readme"><h1>quickbooks</h1>
-<p>Node.js client for <a href="https://developer.intuit.com/docs/0150_payments">QuickBooks Payments Api</a>.</p>
-<h2>Installation</h2>
-<p><code>npm install quickbooks</code></p>
-<h2>Running the tests</h2>
-<p>First you'll need to fill in the missing values in config.js. The consumerKey and consumerSecret you can get from the Intuit Developer portal, the token, tokenSecret, and realmId are easiest to obtain by running the example app, completing the OAuth workflow, and copying the values that are logged to the console. Once you've filled in the missing credentials in config.js you can simply run:</p>
-<p><code>npm test</code></p>
-<h2>Documentation</h2>
-<pre><code class="language-javascript">
-var QuickBooks = require('quickbooks')
-
-var qbo = new QuickBooks(consumerKey,
-                         consumerSecret,
-                         oauthToken,
-                         oauthTokenSecret,
-                         realmId,
-                         false, // don't use the sandbox (i.e. for testing)
-                         true); // turn debugging on
-
-var chargeId
-
-var charge = {
-  capture: false,
-  currency: 'USD',
-  amount: '42.21',
-  card: {
-    expYear: '2016',
-    expMonth: '02',
-    address: {
-      region: 'CA',
-      postalCode: '94062',
-      streetAddress: '131 Fairy Lane',
-      country: 'US',
-      city: 'Sunnyvale'
-    },
-    name: 'Brad Smith',
-    cvc: '123',
-    number: '4111111111111111'
-  }
+          <section id="Quickbooks">
+            <h1>Quickbooks</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">constructor</div><span>&nbsp;</span><span>Quickbooks()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>consumerKey</td>
+                <td></td>
+                <td><ul>
+<li>application key</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>consumerSecret</td>
+                <td></td>
+                <td><ul>
+<li>application password</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>token</td>
+                <td></td>
+                <td><ul>
+<li>the OAuth generated user-specific key</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>tokenSecret</td>
+                <td></td>
+                <td><ul>
+<li>the OAuth generated user-specific password</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>realmId</td>
+                <td></td>
+                <td><ul>
+<li>QuickBooks companyId, returned as a request parameter when the user is redirected to the provided callback URL following authentication</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>useSandbox</td>
+                <td></td>
+                <td><ul>
+<li>boolean - See <a href="https://developer.intuit.com/v2/blog/2014/10/24/intuit-developer-now-offers-quickbooks-sandboxes">https://developer.intuit.com/v2/blog/2014/10/24/intuit-developer-now-offers-quickbooks-sandboxes</a></li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>debug</td>
+                <td></td>
+                <td><ul>
+<li>boolean flag to turn on logging of HTTP requests, including headers and body</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Node.js client encapsulating access to the QuickBooks Payments API. An instance<br />of this class should be instantiated on behalf of each user accessing the api.</p></div>
+          <pre><code class="language-javascript">function Quickbooks(consumerKey, consumerSecret, token, tokenSecret, realmId, useSandbox, debug) {
+  var prefix           = _.isObject(consumerKey) ? 'consumerKey.' : ''
+  this.consumerKey     = eval(prefix + 'consumerKey')
+  this.consumerSecret  = eval(prefix + 'consumerSecret')
+  this.token           = eval(prefix + 'token')
+  this.tokenSecret     = eval(prefix + 'tokenSecret')
+  this.realmId         = eval(prefix + 'realmId')
+  this.useSandbox      = eval(prefix + 'useSandbox')
+  this.debug           = eval(prefix + 'debug')
+  this.endpoint        = this.useSandbox ? Quickbooks.BASE_URL : Quickbooks.BASE_URL.replace('sandbox.', '')
 }
 
-qbo.charge(charge, function(err, charged) {
-  console.log(charged.id)
-})
+// **********************  Charge Api **********************</code></pre>
+          <section id="createToken">
+            <h1>createToken</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.createToken()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>card</td>
+                <td></td>
+                <td><ul>
+<li>the user&#39;s credit card information</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Create an opaque container that encapsulates a cardholder&#39;s credit card information or bank account information.</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.createToken = function(card, callback) {
+  module.request(this, 'post', {
+    url: '/payments/tokens',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, card, callback)
+}</code></pre>
+          <section id="getCharge">
+            <h1>getCharge</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.getCharge()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>chargeId</td>
+                <td>string</td>
+                <td><ul>
+<li>of previously created charge</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Charge</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Get details of charge.</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.getCharge = function(chargeId, callback) {
+  module.request(this, 'get', {
+    url: '/payments/charges/' + chargeId,
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="charge">
+            <h1>charge</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.charge()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>charge</td>
+                <td>object</td>
+                <td><ul>
+<li>details, amount, currency etc. of charge to be processed</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the saved Charge</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Process a credit card charge using card details or token.<br />Can capture funds or just authorize.</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.charge = function(charge, callback) {
+  module.request(this, 'post', {
+    url: '/payments/charges',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, charge, callback)
+}</code></pre>
+          <section id="capture">
+            <h1>capture</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.capture()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>chargeId</td>
+                <td>string</td>
+                <td><ul>
+<li>of previously created charge</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>charge</td>
+                <td>object</td>
+                <td><ul>
+<li>details, amount, currency to capture</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the capture description</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Allows you to capture funds for an existing charge that was intended to be captured at a later time.</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.capture = function(chargeId, charge, callback) {
+  module.request(this, 'post', {
+    url: '/payments/charges/' + chargeId + '/capture',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, charge, callback)
+}</code></pre>
+          <section id="getChargeRefund">
+            <h1>getChargeRefund</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.getChargeRefund()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>chargeId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of previously created charge</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>refundId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of previously created Refund</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Refund</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Retrieves the Refund for the given refund id</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.getChargeRefund = function(chargeId, refundId, callback) {
+  module.request(this, 'get', {
+    url: '/payments/charges/' + chargeId + '/refunds/' + refundId,
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="refundCharge">
+            <h1>refundCharge</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.refundCharge()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>chargeId</td>
+                <td>string</td>
+                <td><ul>
+<li>of previously created charge</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>refund</td>
+                <td>object</td>
+                <td><ul>
+<li>details, amount, currency to refund</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the refund description</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Allows you to refund an existing charge. Full and partial refund are supported.</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.refundCharge = function(chargeId, refund, callback) {
+  module.request(this, 'post', {
+    url: '/payments/charges/' + chargeId + '/refunds',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, refund, callback)
+}</code></pre>
+          <section id="bankAccounts">
+            <h1>bankAccounts</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.bankAccounts()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the list of Bank Accounts</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Retrieves a list of Bank Accounts for the customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.bankAccounts = function(customerId, callback) {
+  module.request(this, 'get', {
+    url: '/payments/customers/' + customerId + '/bank-accounts',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="bankAccount">
+            <h1>bankAccount</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.bankAccount()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>bankAccountId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of Bank Account</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Bank Account</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Retrieves an individual Bank Account for a customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.bankAccount = function(customerId, bankAccountId, callback) {
+  module.request(this, 'get', {
+    url: '/payments/customers/' + customerId + '/bank-accounts/' + bankAccountId,
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="createBankAccount">
+            <h1>createBankAccount</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.createBankAccount()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>bankAccount</td>
+                <td>string</td>
+                <td><ul>
+<li>Bank Account</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Bank Account</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Create a new Bank Account for the customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.createBankAccount = function(customerId, bankAccount, callback) {
+  module.request(this, 'post', {
+    url: '/payments/customers/' + customerId + '/bank-accounts',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, bankAccount, callback)
+}</code></pre>
+          <section id="createBankAccountFromToken">
+            <h1>createBankAccountFromToken</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.createBankAccountFromToken()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>bankAccount</td>
+                <td>string</td>
+                <td><ul>
+<li>Bank Account</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Bank Account</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Create a new Bank Account for the customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.createBankAccountFromToken = function(customerId, bankAccount, callback) {
+  module.request(this, 'post', {
+    url: '/payments/customers/' + customerId + '/bank-accounts/createFromToken',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, bankAccount, callback)
+}</code></pre>
+          <section id="deleteBankAccount">
+            <h1>deleteBankAccount</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.deleteBankAccount()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>bankAccountId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of Bank Account</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Bank Account</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Deletes an individual Bank Account for a customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.deleteBankAccount = function(customerId, bankAccountId, callback) {
+  module.request(this, 'delete', {
+    url: '/payments/customers/' + customerId + '/bank-accounts/' + bankAccountId,
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="cards">
+            <h1>cards</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.cards()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the list of Cards</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Retrieves a list of Cards for the customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.cards = function(customerId, callback) {
+  module.request(this, 'get', {
+    url: '/payments/customers/' + customerId + '/cards',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="bankAccount">
+            <h1>bankAccount</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.bankAccount()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>cardId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of Card</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Card</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Retrieves an individual Card for a customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.bankAccount = function(customerId, cardId, callback) {
+  module.request(this, 'get', {
+    url: '/payments/customers/' + customerId + '/cards/' + cardId,
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="createCard">
+            <h1>createCard</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.createCard()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>card</td>
+                <td>string</td>
+                <td><ul>
+<li>Card</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Card</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Create a new Card for the customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.createCard = function(customerId, card, callback) {
+  module.request(this, 'post', {
+    url: '/payments/customers/' + customerId + '/cards',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, card, callback)
+}</code></pre>
+          <section id="createCardFromToken">
+            <h1>createCardFromToken</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.createCardFromToken()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>card</td>
+                <td>string</td>
+                <td><ul>
+<li>Card</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Card</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Create a new Card for the customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.createCardFromToken = function(customerId, card, callback) {
+  module.request(this, 'post', {
+    url: '/payments/customers/' + customerId + '/cards/createFromToken',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, card, callback)
+}</code></pre>
+          <section id="deleteCard">
+            <h1>deleteCard</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.deleteCard()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>customerId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of customer</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>cardId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of Card</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Card</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Deletes an individual Card for a customer</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.deleteCard = function(customerId, cardId, callback) {
+  module.request(this, 'delete', {
+    url: '/payments/customers/' + customerId + '/cards/' + cardId,
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="getEcheck">
+            <h1>getEcheck</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.getEcheck()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>echeckId</td>
+                <td>string</td>
+                <td><ul>
+<li>of previously created Echeck</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Echeck</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Get details of Echeck.</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.getEcheck = function(echeckId, callback) {
+  module.request(this, 'get', {
+    url: '/payments/echecks/' + echeckId,
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="echeck">
+            <h1>echeck</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.echeck()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>echeck</td>
+                <td>object</td>
+                <td><ul>
+<li>details, amount, currency etc. of charge to be processed</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the saved Echeck</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Process an Echeck.</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.echeck = function(echeck, callback) {
+  module.request(this, 'post', {
+    url: '/payments/echecks',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, echeck, callback)
+}</code></pre>
+          <section id="getEcheckRefund">
+            <h1>getEcheckRefund</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.getEcheckRefund()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>echeckId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of previously created echeck</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>refundId</td>
+                <td>string</td>
+                <td><ul>
+<li>id of previously created Refund</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the Refund</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Retrieves the Refund for the given refund id</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.getEcheckRefund = function(echeckId, refundId, callback) {
+  module.request(this, 'get', {
+    url: '/payments/echecks/' + echeckId + '/refunds/' + refundId,
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, null, callback)
+}</code></pre>
+          <section id="refundEcheck">
+            <h1>refundEcheck</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>Quickbooks.prototype.refundEcheck()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>echeckId</td>
+                <td>string</td>
+                <td><ul>
+<li>of previously created echeck</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>refund</td>
+                <td>object</td>
+                <td><ul>
+<li>details, amount, currency to refund</li>
+</ul>
+</td>
+              </tr>
+              <tr>
+                <td>callback</td>
+                <td></td>
+                <td><ul>
+<li>Callback function which is called with any error or the refund description</li>
+</ul>
+</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Allows you to refund an existing echeck. Full and partial refund are supported.</p></div>
+          <pre><code class="language-javascript">Quickbooks.prototype.refundEcheck = function(echeckId, refund, callback) {
+  module.request(this, 'post', {
+    url: '/payments/echecks/' + echeckId + '/refunds',
+    headers: {
+      'Company-Id': this.realmId
+    }
+  }, refund, callback)
+}
 
-qbo.getCharge(chargeId, function(err, charge) {
-  console.log(charge.card.address.street_address)
-})
 
-qbo.capture(chargeId, { amount: 42.21 }, function(err, capture) {
-  console.log(capture)
-})
+module.request = function(context, verb, options, entity, callback) {
+  var url = context.endpoint + options.url
+  if (options.url === Quickbooks.RECONNECT_URL) {
+    url = options.url
+  }
+  var opts = {
+    url:     url,
+    qs:      options.qs || {},
+    headers: options.headers || {},
+    oauth:   module.oauth(context),
+    json:    true
+  }
+  opts.headers['Content-Type'] = 'application/json'
+  opts.headers['User-Agent'] = 'quickbooks4js: version ' + version
+  opts.headers['Request-Id'] = uuid.v1()
+  if (entity !== null) {
+    opts.body = entity
+  }
+  if ('production' !== process.env.NODE_ENV &amp;&amp; context.debug) {
+    debug(request)
+  }
+  request[verb].call(context, opts, function (err, res, body) {
+    if ('production' !== process.env.NODE_ENV &amp;&amp; context.debug) {
+      console.log('invoking endpoint: ' + url)
+      if (entity) console.log(entity)
+      console.log(util.inspect(err || body, {showHidden: false, depth: null}));
+    }
+    if (callback) {
+      if (err ||
+        res.statusCode &gt;= 300 ||
+        (_.isObject(body) &amp;&amp; body.Fault &amp;&amp; body.Fault.Error &amp;&amp; body.Fault.Error.length)) {
+        callback(err || body, body)
+      } else {
+        callback(null, body)
+      }
+    } else {
+      return
+    }
+  })
+}
 
-qbo.refundCharge(chargeId, {amount: 20.00}, function(err, refund) {
-  console.log(refund)
-})
+Quickbooks.prototype.reconnect = function(callback) {
+  module.request(this, 'get', {url: Quickbooks.RECONNECT_URL}, null, callback)
+}
 
-qbo.getChargeRefund(chargeId, refundId, function(err, refund) {
-  console.log(refund)
-})
-
-</code></pre>
-</section>
+module.oauth = function(context) {
+  return {
+    consumer_key:    context.consumerKey,
+    consumer_secret: context.consumerSecret,
+    token:           context.token,
+    token_secret:    context.tokenSecret
+  }
+}</code></pre>
         </div>
       </div>
     </div>
