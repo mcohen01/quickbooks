@@ -1,0 +1,40 @@
+{
+  "name": "quickbooks",
+  "version": "1.0.0",
+  "description": "node.js client for Intuit's QuickBooks Payments",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcohen01/quickbooks.git"
+  },
+  "keywords": [
+    "quickbooks",
+    "intuit"
+  ],
+  "author": "Michael Cohen",
+  "license": "ISC",
+  "dependencies": {
+    "node-uuid": "^1.4.1",
+    "querystring": "0.2.0",
+    "request": "2.67.0",
+    "underscore": "1.6.0",
+    "util": "0.10.3"
+  },
+  "devDependencies": {
+    "async": "0.9.0",
+    "expect": "0.1.1",
+    "mocha": "2.2.5",
+    "request-debug": "^0.2.0"
+  },
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "bugs": {
+    "url": "https://github.com/mcohen01/quickbooks/issues"
+  },
+  "homepage": "https://github.com/mcohen01/quickbooks"
+}
