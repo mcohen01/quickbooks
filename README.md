@@ -8,7 +8,7 @@ Node.js client for [QuickBooks Payments Api] [1].
 
 ## Documentation
 
-Full Api documentation at [mcohen01.github.io/quickbooks](mcohen01.github.io/quickbooks)
+Full Api documentation at [mcohen01.github.io/quickbooks](https://mcohen01.github.io/quickbooks)
 
 
 ```javascript
