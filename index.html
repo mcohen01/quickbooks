@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" charset="utf-8">
+    <title>Quickbooks Payments</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/cayman.min.css">
+    <link rel="stylesheet" href="css/prism.min.css">
+    <link rel="stylesheet" href="css/index.min.css">
+    <link rel="stylesheet" href="css/docs.min.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container"><a class="brand">Mr. Doc</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav pull-right sponsored"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header id="overview" class="jumbotron subhead">
+      <div class="container">
+        <h1>Quickbooks Payments</h1>
+        <p class="lead"></p>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="span3 bs-docs-sidebar">
+          <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <li class="active"><a href="index.html">Main</a></li>
+            <li><a href="index.js.html">index.js</a></li>
+          </ul>
+          <div class="scrollspy">
+            <ul class="nav nav-list bs-docs-sidenav affix-top">
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          <section id="Main" class="readme"><h1>quickbooks</h1>
+<p>Node.js client for <a href="https://developer.intuit.com/docs/0150_payments">QuickBooks Payments Api</a>.</p>
+<h2>Installation</h2>
+<p><code>npm install quickbooks</code></p>
+<h2>Running the tests</h2>
+<p>First you'll need to fill in the missing values in config.js. The consumerKey and consumerSecret you can get from the Intuit Developer portal, the token, tokenSecret, and realmId are easiest to obtain by running the example app, completing the OAuth workflow, and copying the values that are logged to the console. Once you've filled in the missing credentials in config.js you can simply run:</p>
+<p><code>npm test</code></p>
+<h2>Documentation</h2>
+<pre><code class="language-javascript">
+var QuickBooks = require('quickbooks')
+
+var qbo = new QuickBooks(consumerKey,
+                         consumerSecret,
+                         oauthToken,
+                         oauthTokenSecret,
+                         realmId,
+                         false, // don't use the sandbox (i.e. for testing)
+                         true); // turn debugging on
+
+var chargeId
+
+var charge = {
+  capture: false,
+  currency: 'USD',
+  amount: '42.21',
+  card: {
+    expYear: '2016',
+    expMonth: '02',
+    address: {
+      region: 'CA',
+      postalCode: '94062',
+      streetAddress: '131 Fairy Lane',
+      country: 'US',
+      city: 'Sunnyvale'
+    },
+    name: 'Brad Smith',
+    cvc: '123',
+    number: '4111111111111111'
+  }
+}
+
+qbo.charge(charge, function(err, charged) {
+  console.log(charged.id)
+})
+
+qbo.getCharge(chargeId, function(err, charge) {
+  console.log(charge.card.address.street_address)
+})
+
+qbo.capture(chargeId, { amount: 42.21 }, function(err, capture) {
+  console.log(capture)
+})
+
+qbo.refundCharge(chargeId, {amount: 20.00}, function(err, refund) {
+  console.log(refund)
+})
+
+qbo.getChargeRefund(chargeId, refundId, function(err, refund) {
+  console.log(refund)
+})
+
+</code></pre>
+</section>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Documentation generated with <a href="https://github.com/mr-doc/mr-doc">Mr. Doc </a> created by <a href="https://twitter.com/FGRibreau" data-show-count="false" class="twitter-follow-button">Francois-Guillaume Ribreau </a></p>
+        <p>Mr. Doc is sponsored by <a href="http://bringr.net/?btt" title="Outil d'analyse des réseaux sociaux" class="bringr">Bringr </a> and <a href="https://redsmin.com/?btt" title="Full Redis GUI" class="redsmin">Redsmin</a></p>
+        <p>Theme borrowed from Twitter Bootstrap</p>
+      </div>
+    </footer>
+    <script src="js/twitter-widget.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap-transition.min.js"></script>
+    <script src="js/bootstrap-scrollspy.min.js"></script>
+    <script src="js/bootstrap-dropdown.min.js"></script>
+    <script src="js/bootstrap-collapse.min.js"></script>
+    <script src="js/bootstrap-affix.min.js"></script>
+    <script src="js/prism.min.js"></script>
+    <script src="js/index.min.js"></script>
+  </body>
+</html>
