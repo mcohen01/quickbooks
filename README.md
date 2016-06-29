@@ -1,6 +1,7 @@
 # quickbooks
 
-Node.js client for [QuickBooks Payments Api] [1].
+Node.js client for [QuickBooks Payments api] [1].
+(Quickbooks Accounting client available at [github.com/mcohen01/node-quickbooks](https://github.com/mcohen01/node-quickbooks).)
 
 ## Installation
 
