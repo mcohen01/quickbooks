@@ -17,7 +17,6 @@
   "author": "Michael Cohen",
   "license": "ISC",
   "dependencies": {
-    "node-uuid": "^1.4.1",
     "querystring": "0.2.0",
     "request": "2.67.0",
     "request-debug": "0.0.1",
@@ -28,7 +27,8 @@
     "async": "0.9.0",
     "expect": "0.1.1",
     "mocha": "2.2.5",
-    "request-debug": "^0.2.0"
+    "request-debug": "^0.2.0",
+    "uuid": "^3.0.0"
   },
   "directories": {
     "example": "example",
