@@ -16,39 +16,50 @@ Full Api documentation at [mcohen01.github.io/quickbooks](https://mcohen01.githu
 
 var QuickBooks = require('quickbooks')
 
-var qbo = new QuickBooks(consumerKey,
+var qbo = new QuickBooks({consumerKey,
                          consumerSecret,
                          oauthToken,
-                         oauthTokenSecret,
+                         oauthTokenSecret, // false for OAuth 2.0
                          realmId,
+                         refreshToken, // needed for OAuth 2.0
+                         oauthversion, // 2.0 if OAuth 2.0
                          false, // don't use the sandbox (i.e. for testing)
-                         true); // turn debugging on
+                         true}); // turn debugging on
 
-var chargeId
+var card = {
+      name: 'Brad Smith',
+      card: {
+        cvc: '123',
+        number: '4111111111111111',
+        expYear: '2016',
+        expMonth: '02',
+        address: {
+          region: 'CA',
+          postalCode: '94062',
+          streetAddress: '131 Fairy Lane',
+          country: 'US',
+          city: 'Sunnyvale'
+        }
+      }
+    }
+var token, chargeId;
 
-var charge = {
-  capture: false,
-  currency: 'USD',
-  amount: '42.21',
-  card: {
-    expYear: '2016',
-    expMonth: '02',
-    address: {
-      region: 'CA',
-      postalCode: '94062',
-      streetAddress: '131 Fairy Lane',
-      country: 'US',
-      city: 'Sunnyvale'
-    },
-    name: 'Brad Smith',
-    cvc: '123',
-    number: '4111111111111111'
-  }
-}
+qbo.createToken(card, function(err, cardToken) {
+  token = cardToken.value
+  console.log(cardToken.value)
+})
 
-qbo.charge(charge, function(err, charged) {
+qbo.charge({ amount: "10.55", token,  "currency" : "USD"}, function(err, charged) {
   console.log(charged.id)
 })
+
+// without token
+
+qbo.charge(card, function(err, charged) {
+  chargeId = charged.id
+  console.log(charged.id)
+})
+
 
 qbo.getCharge(chargeId, function(err, charge) {
   console.log(charge.card.address.street_address)
