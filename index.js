@@ -16,8 +16,12 @@ var request = require('request'),
 module.exports = Quickbooks
 
 
-Quickbooks.RECONNECT_URL              = 'https://appcenter.intuit.com/api/v1/connection/reconnect'
-Quickbooks.BASE_URL                   = 'https://sandbox.api.intuit.com/quickbooks/v4'
+Quickbooks.REQUEST_TOKEN_URL = 'https://oauth.intuit.com/oauth/v1/get_request_token'
+Quickbooks.ACCESS_TOKEN_URL = 'https://oauth.intuit.com/oauth/v1/get_access_token'
+Quickbooks.APP_CENTER_BASE = 'https://appcenter.intuit.com'
+Quickbooks.APP_CENTER_URL = Quickbooks.APP_CENTER_BASE + '/Connect/Begin?oauth_token='
+Quickbooks.RECONNECT_URL = Quickbooks.APP_CENTER_BASE + '/api/v1/connection/reconnect'
+Quickbooks.BASE_URL = 'https://sandbox.api.intuit.com/quickbooks/v4'
 
 /**
  * Node.js client encapsulating access to the QuickBooks Payments API. An instance
@@ -28,6 +32,8 @@ Quickbooks.BASE_URL                   = 'https://sandbox.api.intuit.com/quickboo
  * @param token - the OAuth generated user-specific key
  * @param tokenSecret - the OAuth generated user-specific password
  * @param realmId - QuickBooks companyId, returned as a request parameter when the user is redirected to the provided callback URL following authentication
+ * @param refreshToken - Refresh token obtained from Quickbooks OAuth 2.0
+ * @param oauthversion - OAuth version to use. (2.0|1.0a)
  * @param useSandbox - boolean - See https://developer.intuit.com/v2/blog/2014/10/24/intuit-developer-now-offers-quickbooks-sandboxes
  * @param debug - boolean flag to turn on logging of HTTP requests, including headers and body
  * @constructor
