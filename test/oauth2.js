@@ -4,7 +4,17 @@ var expect = require('expect'),
     config = require('../config'),
     QuickBooks = require('../index'),
     chalk = require("chalk"),
-    qbo = new QuickBooks(config);
+    qbo = new QuickBooks(
+        config.consumerKey,
+        config.consumerSecret,
+        config.token,
+        config.tokenSecret,
+        config.realmId,
+        config.refreshToken,
+        config.oauthversion,
+        config.useSandbox,
+        config.debug
+    );
 
 var green = (s) => console.log("\t", chalk.green("[+] " + s))
 

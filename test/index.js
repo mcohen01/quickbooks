@@ -4,7 +4,17 @@ var expect     = require('expect'),
     async      = require('async'),
     config     = require('../config'),
     QuickBooks = require('../index'),
-    qbo        = new QuickBooks(config);
+    qbo        = new QuickBooks(
+          config.consumerKey,
+          config.consumerSecret,
+          config.token,
+          config.tokenSecret,
+          config.realmId,
+          config.refreshToken,
+          config.oauthversion,
+          config.useSandbox,
+          config.debug
+    );
 
 
 

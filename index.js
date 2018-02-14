@@ -32,7 +32,7 @@ Quickbooks.BASE_URL                   = 'https://sandbox.api.intuit.com/quickboo
  * @param debug - boolean flag to turn on logging of HTTP requests, including headers and body
  * @constructor
  */
-function Quickbooks({consumerKey, consumerSecret, token, tokenSecret, realmId, refreshToken, oauthversion, useSandbox, debug}) {
+function Quickbooks(consumerKey, consumerSecret, token, tokenSecret, realmId, refreshToken, oauthversion, useSandbox, debug) {
   var prefix = _.isObject(consumerKey) ? 'consumerKey.' : '';
   this.consumerKey = eval(prefix + 'consumerKey');
   this.consumerSecret = eval(prefix + 'consumerSecret');
