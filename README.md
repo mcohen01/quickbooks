@@ -16,7 +16,7 @@ Full Api documentation at [mcohen01.github.io/quickbooks](https://mcohen01.githu
 
 var QuickBooks = require('quickbooks')
 
-var qbo = new QuickBooks({consumerKey,
+var qbo = new QuickBooks(consumerKey,
                          consumerSecret,
                          oauthToken,
                          oauthTokenSecret, // false for OAuth 2.0
@@ -24,7 +24,7 @@ var qbo = new QuickBooks({consumerKey,
                          refreshToken, // needed for OAuth 2.0
                          oauthversion, // 2.0 if OAuth 2.0
                          false, // don't use the sandbox (i.e. for testing)
-                         true}); // turn debugging on
+                         true); // turn debugging on
 
 var card = {
       name: 'Brad Smith',
