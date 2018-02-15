@@ -61,14 +61,9 @@ function Quickbooks(consumerKey, consumerSecret, token, tokenSecret, realmId, re
  * @param callback
  */
 Quickbooks.prototype.createToken = function(card, callback) {
-  request({
-    method: "POST",
-    url: Quickbooks.BASE_URL + "/payments/tokens",
-    body: card,
-    json: true
-  }, function (err, res, body) {
-    callback(err, body)
-  })
+  module.request(this, 'post', {
+    url: "/payments/tokens"
+  }, card, callback)
 }
 
 
@@ -405,7 +400,9 @@ module.request = function(context, verb, options, entity, callback) {
   opts.headers['User-Agent'] = 'quickbooks4js: version ' + version
   opts.headers['Request-Id'] = uuid.v1()
   if (context.oauthversion == '2.0') {
-    opts.headers['Authorization'] = 'Bearer ' + context.token
+    if (options.url != "/payments/tokens") {
+      opts.headers['Authorization'] = 'Bearer ' + context.token
+    }
   } else {
     opts.oauth = module.oauth(context);
   };
