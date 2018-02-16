@@ -1,6 +1,6 @@
 {
   "name": "quickbooks",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "node.js client for Intuit's QuickBooks Payments",
   "main": "index.js",
   "scripts": {
