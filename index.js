@@ -15,12 +15,13 @@ var request = require('request'),
 
 module.exports = Quickbooks
 
-Quickbooks.REQUEST_TOKEN_URL          = 'https://oauth.intuit.com/oauth/v1/get_request_token'
-Quickbooks.ACCESS_TOKEN_URL           = 'https://oauth.intuit.com/oauth/v1/get_access_token'
-Quickbooks.APP_CENTER_BASE            = 'https://appcenter.intuit.com'
-Quickbooks.APP_CENTER_URL             = Quickbooks.APP_CENTER_BASE + '/Connect/Begin?oauth_token='
-Quickbooks.RECONNECT_URL              = Quickbooks.APP_CENTER_BASE + '/api/v1/connection/reconnect'
-Quickbooks.BASE_URL                   = 'https://sandbox.api.intuit.com/quickbooks/v4'
+
+Quickbooks.REQUEST_TOKEN_URL = 'https://oauth.intuit.com/oauth/v1/get_request_token'
+Quickbooks.ACCESS_TOKEN_URL = 'https://oauth.intuit.com/oauth/v1/get_access_token'
+Quickbooks.APP_CENTER_BASE = 'https://appcenter.intuit.com'
+Quickbooks.APP_CENTER_URL = Quickbooks.APP_CENTER_BASE + '/Connect/Begin?oauth_token='
+Quickbooks.RECONNECT_URL = Quickbooks.APP_CENTER_BASE + '/api/v1/connection/reconnect'
+Quickbooks.BASE_URL = 'https://sandbox.api.intuit.com/quickbooks/v4'
 
 /**
  * Node.js client encapsulating access to the QuickBooks Payments API. An instance
@@ -31,20 +32,25 @@ Quickbooks.BASE_URL                   = 'https://sandbox.api.intuit.com/quickboo
  * @param token - the OAuth generated user-specific key
  * @param tokenSecret - the OAuth generated user-specific password
  * @param realmId - QuickBooks companyId, returned as a request parameter when the user is redirected to the provided callback URL following authentication
+ * @param refreshToken - Refresh token obtained from Quickbooks OAuth 2.0
+ * @param oauthversion - OAuth version to use. (2.0|1.0a)
  * @param useSandbox - boolean - See https://developer.intuit.com/v2/blog/2014/10/24/intuit-developer-now-offers-quickbooks-sandboxes
  * @param debug - boolean flag to turn on logging of HTTP requests, including headers and body
  * @constructor
  */
-function Quickbooks(consumerKey, consumerSecret, token, tokenSecret, realmId, useSandbox, debug) {
-  var prefix           = _.isObject(consumerKey) ? 'consumerKey.' : ''
-  this.consumerKey     = eval(prefix + 'consumerKey')
-  this.consumerSecret  = eval(prefix + 'consumerSecret')
-  this.token           = eval(prefix + 'token')
-  this.tokenSecret     = eval(prefix + 'tokenSecret')
-  this.realmId         = eval(prefix + 'realmId')
-  this.useSandbox      = eval(prefix + 'useSandbox')
-  this.debug           = eval(prefix + 'debug')
-  this.endpoint        = this.useSandbox ? Quickbooks.BASE_URL : Quickbooks.BASE_URL.replace('sandbox.', '')
+function Quickbooks(consumerKey, consumerSecret, token, tokenSecret, realmId, refreshToken, oauthversion, useSandbox, debug) {
+  var prefix = _.isObject(consumerKey) ? 'consumerKey.' : '';
+  this.consumerKey = eval(prefix + 'consumerKey');
+  this.consumerSecret = eval(prefix + 'consumerSecret');
+  this.token = eval(prefix + 'token');
+  this.tokenSecret = eval(prefix + 'tokenSecret');
+  this.realmId = eval(prefix + 'realmId');
+  this.useSandbox = eval(prefix + 'useSandbox');
+  this.debug = eval(prefix + 'debug');
+  this.endpoint = this.useSandbox ? Quickbooks.BASE_URL : Quickbooks.BASE_URL.replace('sandbox.', '')
+  this.oauthversion = oauthversion || '1.0a';
+  this.refreshToken = refreshToken || null;
+  if (!tokenSecret && this.oauthversion !== '2.0') throw new Error('tokenSecret not defined');
 }
 
 // **********************  Charge Api **********************
@@ -56,10 +62,7 @@ function Quickbooks(consumerKey, consumerSecret, token, tokenSecret, realmId, us
  */
 Quickbooks.prototype.createToken = function(card, callback) {
   module.request(this, 'post', {
-    url: '/payments/tokens',
-    headers: {
-      'Company-Id': this.realmId
-    }
+    url: "/payments/tokens"
   }, card, callback)
 }
 
@@ -391,12 +394,18 @@ module.request = function(context, verb, options, entity, callback) {
     url:     url,
     qs:      options.qs || {},
     headers: options.headers || {},
-    oauth:   module.oauth(context),
     json:    true
   }
   opts.headers['Content-Type'] = 'application/json'
   opts.headers['User-Agent'] = 'quickbooks4js: version ' + version
   opts.headers['Request-Id'] = uuid.v1()
+  if (context.oauthversion == '2.0') {
+    if (options.url != "/payments/tokens") {
+      opts.headers['Authorization'] = 'Bearer ' + context.token
+    }
+  } else {
+    opts.oauth = module.oauth(context);
+  };
   if (entity !== null) {
     opts.body = entity
   }
